@@ -4,6 +4,9 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-    <h1>This is our home page.</h1>
+<main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role = "main">
+    <h1 id="content" class="bd-title">This is our home page.</h1>
+    <p class ="bd-lead">This is the home page for your amazing bookstore.</p>
     <img class="bookcover" src = "{% static 'images/dfp.jpg' %}">
+</main>
 {% endblock content %}

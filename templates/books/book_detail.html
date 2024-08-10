@@ -4,17 +4,19 @@
 {% block title %}{{ book.title }}{% endblock title %}
 
 {% block content %}
+<main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role = "main">
     <div class = "book-detail">
         {% if book.cover %}
             <img class="bookcover" src="{{ book.cover.url }}" alt = "{{ book.title }}">
         {% endif %}
-        <h2>
-            <a href="">{{ book.title }}</a>
-        </h2>
-        <p>Author: {{ book.author }}</p>
-        <p>Price: {{ book.price }}</p>
+        <h1 id="title" class="bd-title"><a href="">{{ book.title }}</a></h1>
+        <p class="bd-lead">Author: {{ book.author }}</p>
+        <!-- <p>Author: {{ book.author }}</p> -->
+        <span class="badge badge-primary badge-pill" style="background-color: #007bff">${{ book.price }}</span>
+        <!-- <p>Price: {{ book.price }}</p> -->
+        <p></p>
         <div>
-            <h3>Reviews</h3>
+            <h3 id="reviews">Reviews</h3>
             <ul>
                 {% for review in book.reviews.all %}
                 <li>{{ review.review }} ({{ review.author }})</li>
@@ -22,4 +24,5 @@
             </ul>
         </div>
     </div>
+</main>
 {% endblock content %}

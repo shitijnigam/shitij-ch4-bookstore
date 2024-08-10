@@ -1,0 +1,18 @@
+{% extends "_base.html" %}
+
+{% block title %}Search{% endblock title %}
+
+{% block content %}
+<main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role = "main">
+    <h1 id="content" class="bd-title">Search Results</h1>
+    <p class  ="bd-lead">Search results, for the query "API" or "Professional".</p>
+    <div class="list-group">
+    {% for book in book_list %}
+        <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="{{ book.get_absolute_url }}">{{ book.title }}, by {{ book.author }}
+            <!-- <p>Price: $ {{ book.price }}</p> -->
+            <span class="badge badge-primary badge-pill" style="background-color: #007bff">${{ book.price }}</span>
+        </a>
+    {% endfor %}
+    </div>
+</main>
+{% endblock content %}
