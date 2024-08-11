@@ -2,13 +2,16 @@
 services:
   web:
     build: .
-    command: python /code/manage.py runserver 0.0.0.0:8000
+    # command: python /code/manage.py runserver 0.0.0.0:8000
+    command: gunicorn django_project.wsgi -b 0.0.0.0:8000
     volumes:
       - .:/code
     ports:
       - 8000:8000
     depends_on:
       - db
+    links:
+      - db:db
     environment:
       - "DJANGO_SECRET_KEY=django-insecure-49pd0@@&w2wzkw8d7*i01pi1ni_llsvuhfe#+f7^46xx2hnvv+"
       - "DJANGO_DEBUG=True"
@@ -18,8 +21,13 @@ services:
       - "DJANGO_SECURE_HSTS_PRELOAD=False"
       - "DJANGO_SESSION_COOKIE_SECURE=False"
       - "DJANGO_CSRF_COOKIE_SECURE=False"
+    networks:
+      - djangonetwork
 
   db:
+    container_name: db
+    networks: 
+      - djangonetwork
     image: postgres:13
     volumes:
       - postgres_data:/var/lib/postgresql/data/
@@ -28,3 +36,7 @@ services:
   
 volumes:
   postgres_data:
+
+networks:
+  djangonetwork:
+    driver: bridge

@@ -25,7 +25,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("DJANGO_SECRET_KEY")
+# SECRET_KEY = env("DJANGO_SECRET_KEY")
+
+# fly specific
+from django.core.management.utils import get_random_secret_key
+
+# SECRET_KEY = env.str("DJANGO_SECRET_KEY", default=get_random_secret_key())
+SECRET_KEY = env.str("SECRET_KEY", default=get_random_secret_key())
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DJANGO_DEBUG", default=False)
@@ -41,6 +48,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "whitenoise.runserver_nostatic",  # always above django.contrib.staticfiles
     "django.contrib.staticfiles",
     "django.contrib.sites",
     # Third part
@@ -60,6 +68,7 @@ MIDDLEWARE = [
     "django.middleware.cache.UpdateCacheMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # always before CommonMiddleware
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -112,6 +121,8 @@ WSGI_APPLICATION = "django_project.wsgi.application"
 # }
 
 DATABASES = {
+    # "default": env.dj_db_url("DATABASE_URL", default="postgres://postgres@db/postgres")
+    # "default": env.dj_db_url("DATABASE_URL", default=env.db())
     "default": env.dj_db_url("DATABASE_URL", default="postgres://postgres@db/postgres")
 }
 
@@ -153,7 +164,8 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+# STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
@@ -182,7 +194,8 @@ ACCOUNT_UNIQUE_EMAIL = True
 
 # general
 # DEBUG = env.bool("DJANGO_DEBUG")
-ALLOWED_HOSTS = [".herokuapp.com", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "shitij-ch4-bookstore.fly.dev"]
+CSFR_TRUSTED_ORIGINS = ["https://shitij-ch4-bookstore.fly.dev"]
 DEFAULT_FROM_EMAIL = "admin@djangobookstore.com"
 
 # Performance and debug toolbars
