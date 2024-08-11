@@ -21,7 +21,7 @@ from django.urls import path, include
 
 urlpatterns = [
     # Django Admin
-    path("admin/", admin.site.urls),
+    path("anything-but-admin/", admin.site.urls),
     # user management
     path("accounts/", include("allauth.urls")),
     # local apps
