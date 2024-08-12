@@ -33,6 +33,18 @@ class Book(models.Model):
         return reverse("book_detail", args=[str(self.id)])
 
 
+class ReviewStar(models.Model):
+    book = models.ForeignKey(
+        Book,
+        on_delete=models.CASCADE,
+        related_name="review_star",
+    )
+    review_star = models.DecimalField(max_digits=6, decimal_places=2)
+
+    def __float__(self):
+        return self.review_star
+
+
 class Review(models.Model):
     book = models.ForeignKey(
         Book,
@@ -47,3 +59,51 @@ class Review(models.Model):
 
     def __str__(self):
         return self.review
+
+
+class Genre(models.Model):
+    book = models.ForeignKey(
+        Book,
+        on_delete=models.CASCADE,
+        related_name="genres",
+    )
+    genre = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.genre
+
+
+class ReviewSummaryOverall(models.Model):
+    book = models.ForeignKey(
+        Book,
+        on_delete=models.CASCADE,
+        related_name="review_summary",
+    )
+    review_summary = models.TextField()
+
+    def __str__(self):
+        return self.review_summary
+
+
+class ReviewSummaryGenre(models.Model):
+    book = models.ForeignKey(
+        Book,
+        on_delete=models.CASCADE,
+        related_name="review_genre",
+    )
+    review_genre = models.TextField()
+
+    def __str__(self):
+        return self.review_genre
+
+
+class ReviewSummaryAuthor(models.Model):
+    book = models.ForeignKey(
+        Book,
+        on_delete=models.CASCADE,
+        related_name="review_author",
+    )
+    review_author = models.TextField()
+
+    def __str__(self):
+        return self.review_author

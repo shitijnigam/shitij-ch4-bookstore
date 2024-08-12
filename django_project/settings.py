@@ -195,7 +195,7 @@ ACCOUNT_UNIQUE_EMAIL = True
 # general
 # DEBUG = env.bool("DJANGO_DEBUG")
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "shitij-ch4-bookstore.fly.dev"]
-CSFR_TRUSTED_ORIGINS = ["https://shitij-ch4-bookstore.fly.dev"]
+CSRF_TRUSTED_ORIGINS = ["https://shitij-ch4-bookstore.fly.dev"]
 DEFAULT_FROM_EMAIL = "admin@djangobookstore.com"
 
 # Performance and debug toolbars
