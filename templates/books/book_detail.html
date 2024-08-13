@@ -10,16 +10,32 @@
             <div class="col-12 col-md-8">
                 <div class="media-body">
                     <h1 id="title" class="bd-title">{{ book.title }}</h1>
-                    <p class="bd-lead">by {{ book.author }}</p>
-                    <!-- <p>Author: {{ book.author }}</p> -->
-                    <span class="badge badge-primary badge-pill" style="background-color: #007bff">${{ book.price }}</span>
-                    <!-- <p>Price: {{ book.price }}</p> -->
-                    <p></p>
+                    <p class="text-muted">by {{ book.author }}</p>
+                    <p>
+                        Rating: 
+                        <span class="badge rounded-pill bg-primary">
+                            {% for review_star in book.review_star.all %}{{ review_star.review_star }}{% endfor %}
+                        </span> 
+                        vs. avg. of 
+                        <span class="badge rounded-pill bg-secondary">
+                            4.10
+                        </span> 
+                        in {% for genre in book.genres.all %}
+                        <span class="badge rounded-pill bg-dark">
+                            {{ genre.genre }}
+                        </span> 
+                        {% endfor %}
+                    </p>
                     <div>
-                        <h3 id="reviews">Reviews</h3>
+                        <h6 id="synopsis_summary">Synopsis</h6>
+                        <p>{{ book.description }}</p>
+                        <h6 id="pro_summary">Critics Reviews</h6>
+                        {% for review_summary in book.review_summary.all %}<p>{{ review_summary.review_summary }}</p>{% endfor %}
+                        <h6 id="goodreads_summary">Goodreads Reviews</h6>
+                        {% for review_summary in book.review_summary.all %}<p>{{ review_summary.review_summary }} (<a href="https://www.goodreads.com/book/show/3/reviews" class="text-underline-hover">Read all</a>)</p>{% endfor %}
                         <ul class="list-group list-group-flush">
                             {% for review in book.reviews.all %}
-                            <li class="list-group-item">{{ review.review }}, by <a class="card-link" href="#">{{ review.author }}</a></li>
+                                <li class="list-group-item">{{ review.review }}, by <a class="card-link" href="#">{{ review.author }}</a></li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -29,7 +45,44 @@
                 {% if book.cover %}
                     <img class="ml-3 img-thumbnail" src="{{ book.cover.url }}" alt = "{{ book.title }}"> <!-- original class: bookcover -->
                 {% endif %}
+                
             </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-8">
+                <div id="accordion">
+                    <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                        <button class="btn btn-link text-underline-hover" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            vs. other books in similar genres
+                        </button>
+                        </h5>
+                    </div>
+                
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            {% for review_genre in book.review_genre.all %}<p>{{ review_genre.review_genre }}</p>{% endfor %}
+                        </div>
+                    </div>
+                    </div>
+                    <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="mb-0">
+                        <button class="btn btn-link collapsed text-underline-hover" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            vs. other books by Author
+                        </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            {% for review_author in book.review_author.all %}<p>{{ review_author.review_author }}</p>{% endfor %}
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4"></div>
         </div>
     </div>
 </main>
