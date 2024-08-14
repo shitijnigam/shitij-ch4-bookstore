@@ -4,103 +4,65 @@
 {% block title %}{{ book.title }}{% endblock title %}
 
 {% block content %}
-<main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role = "main">
+<main class="py-md-3 col-md-10 bd-content" role = "main"><!-- col-xl-8  pl-md-5 col-md-9 col-12 -->
     <div class = "container">
         <div class="row">
+            <div class="col-6 col-md-4">
+                {% if book.cover %}
+                    <img class="ml-3 img-thumbnail rounded mx-auto d-block" src="{{ book.cover.url }}" alt = "{{ book.title }}"> <!-- original class: bookcover -->
+                {% endif %}
+            </div>
             <div class="col-12 col-md-8">
                 <div class="media-body">
                     <h1 id="title" class="bd-title">{{ book.title }}</h1>
                     <p class="text-muted">by {{ book.author }}</p>
-                    <p>
-                        Rating: 
-                        <span class="badge rounded-pill bg-primary">
-                            {% for review_star in book.review_star.all %}{{ review_star.review_star }}{% endfor %}
-                        </span> 
-                        across 
-                        <span class="badge rounded-pill bg-secondary">
-                            900
-                        </span> ratings
-                    </p>
-                    <p>
-                        Genre: {% for genre in book.genres.all %}
-                        <span class="badge rounded-pill bg-dark">
-                            {{ genre.genre }}
-                        </span> 
-                        {% endfor %}
-                    </p>
                     <div>
                         <!-- <h6 id="synopsis_summary">Synopsis</h6> -->
                         <p>{{ book.description }}</p>
-                        <h6 id="critic_summary">Critics Reviews</h6>
-                        {% for review_summary in book.review_summary.all %}<p>{{ review_summary.review_summary }}</p>{% endfor %}
+                        <p>{% for genre in book.genres.all %}<span class="badge rounded-pill bg-dark">{{ genre.genre }}</span>{% endfor %}</p>
+                        <h6 class="py-md-3" id="critic_summary">Critics Reviews</h6>
+                        <!-- {% for review_summary in book.review_summary.all %}<p>{{ review_summary.review_summary }}</p>{% endfor %} -->
                         <ul class="list-group list-group-flush">
-                            {% for review in book.reviews.all %}
+                            <!-- {% for review in book.reviews.all %}
                             <li class="list-group-item"><em><a class="card-link" href="{{ review.review_url }}"> {{ review.reviewer_name }}</a>: "{{ review.review }}"</em></li>
-                            {% endfor %}
+                            {% endfor %} -->
+                            <li class="list-group-item"><strong>Praise: </strong> Critics praise "Slow Noodles" for its intimate and honest portrayal of Cambodian life, particularly the author's ability to blend personal narrative with the historical context of the Khmer Rouge. The book is lauded for its vivid sensory details, especially in descriptions of food and culture, creating a rich and immersive reading experience. Many critics appreciate the author's resilience and strength, shining through the heartbreaking narrative.</li>
+                            <li class="list-group-item"><strong>Criticisms: </strong> Limited critical coverage.</li>
                         </ul>
-                        <br />
-                        <h6 id="goodreads_summary">Goodreads Reviews</h6>
-                        {% for review_goodreads in book.review_goodreads.all %}<p>{{ review_goodreads.review_goodreads }} (<a href="https://www.goodreads.com/book/show/3/reviews" class="text-underline-hover">Read all</a>)</p>{% endfor %}
-                        <h6 id="amazon_summary">Amazon Reviews</h6>
-                        {% for review_amazon in book.review_amazon.all %}<p>{{ review_amazon.review_amazon }} (<a href="https://www.goodreads.com/book/show/3/reviews" class="text-underline-hover">Read all</a>)</p>{% endfor %}
+                        <h6 class="py-md-3" id="goodreads_summary">Goodreads Reviews • <span class="badge rounded-pill bg-primary">{% for review_star in book.review_star.all %}{{ review_star.review_star }}{% endfor %}</span> • <span class="badge rounded-pill bg-secondary">900</span> ratings</h6>
+                        <!-- {% for review_goodreads in book.review_goodreads.all %}<p>{{ review_goodreads.review_goodreads }} (<a href="https://www.goodreads.com/book/show/3/reviews" class="text-underline-hover">Read all</a>)</p>{% endfor %} -->
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Praise: </strong> Goodreads readers praise "Slow Noodles" for its poignant exploration of Cambodian culture and the author's resilience. Many appreciate the vivid descriptions of food and family, creating a strong sense of place. The memoir is often described as heartwarming, heartbreaking, and ultimately hopeful. Readers admire Nguon's ability to share her personal journey with such honesty and vulnerability.</li>
+                            <li class="list-group-item"><strong>Criticisms: </strong> Readers sometimes mention pacing issues in "Slow Noodles," feeling certain parts drag while others rush. Some wish for deeper exploration of the Khmer Rouge era and its lasting impact. A few find the constant focus on food repetitive, desiring more balance with personal narrative. Additionally, a small number of readers express difficulty connecting emotionally with the author due to a perceived distance in storytelling.</li>
+                        </ul>
+                        <h6 class="py-md-3" id="amazon_summary">Amazon Reviews • <span class="badge rounded-pill bg-primary">4.9</span> • <span class="badge rounded-pill bg-secondary">33</span> ratings</h6>
+                        <!-- {% for review_amazon in book.review_amazon.all %}<p>{{ review_amazon.review_amazon }} (<a href="https://www.goodreads.com/book/show/3/reviews" class="text-underline-hover">Read all</a>)</p>{% endfor %} -->
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Praise: </strong> Amazon reviewers praise Slow Noodles for its heartfelt storytelling, blending rich cultural history with personal memoir. Readers appreciate the authentic portrayal of Cambodian traditions, the evocative writing, and the way food and family are intricately woven into the narrative.</li>
+                            <li class="list-group-item"><strong>Criticisms: </strong> Some Amazon reviewers of Slow Noodles offered critiques, noting that the memoir's emotional depth and detailed recounting of the Cambodian genocide might be overwhelming for some readers. Additionally, a few felt that the narrative's focus on food could sometimes overshadow the historical and personal elements of the story.</li>
+                        </ul>
+                        
                     </div>
                 </div>
             </div>
-            <div class="col-6 col-md-4">
-                {% if book.cover %}
-                    <img class="ml-3 img-thumbnail" src="{{ book.cover.url }}" alt = "{{ book.title }}"> <!-- original class: bookcover -->
-                {% endif %}
-                
-            </div>
         </div>
-        <div class="row">
+        <div class="row py-md-3">
+            <div class="col-6 col-md-4"></div>
             <div class="col-12 col-md-8">
                 <h6 id="other_books_by_author">Related Books</h6>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><a class="card-link" href="%">A Journey Through African American Culinary History in the Old South</a> by Michael W. Twitty - <span class="badge rounded-pill bg-primary">4.45</span> across <span class="badge rounded-pill bg-secondary">10,598</span> ratings</li>
-                        <li class="list-group-item"><a class="card-link" href="%">Crying in H Mart</a> by Michelle Zauner - <span class="badge rounded-pill bg-primary">4.39</span> across <span class="badge rounded-pill bg-secondary">318,432</span> ratings</li>
-                        <li class="list-group-item"><a class="card-link" href="%">Apricots on the Nile: A Memoir with Recipes</a> by Colette Rossant - <span class="badge rounded-pill bg-primary">3.80</span> across <span class="badge rounded-pill bg-secondary">689</span> ratings</li>
-                        <li class="list-group-item"><a class="card-link" href="%">The Language of Baklava</a> by Diana Abu-Jaber - <span class="badge rounded-pill bg-primary">4.08</span> across <span class="badge rounded-pill bg-secondary">3,907</span> ratings</li>
-                        <li class="list-group-item"><a class="card-link" href="%">Taste: My Life Through Food</a> by Stanley Tucci - <span class="badge rounded-pill bg-primary">4.15</span> across <span class="badge rounded-pill bg-secondary">39,754</span> ratings</li>
-                        <li class="list-group-item"><a class="card-link" href="%">Burnt Toast Makes You Sing Good</a> by Kathleen Flinn - <span class="badge rounded-pill bg-primary">3.83</span> across <span class="badge rounded-pill bg-secondary">2,540</span> ratings</li>
-                        <li class="list-group-item"><a class="card-link" href="%">With the Fire on High</a> by Elizabeth Acevedo - <span class="badge rounded-pill bg-primary">4.29</span> across <span class="badge rounded-pill bg-secondary">95,740</span> ratings</li>
-                        <li class="list-group-item"><a class="card-link" href="%">Yes, Chef</a> by Marcus Samuelsson - <span class="badge rounded-pill bg-primary">4.09</span> across <span class="badge rounded-pill bg-secondary">22,948</span> ratings</li>
-                        <li class="list-group-item"><a class="card-link" href="%">The Mistress of Spices</a> by Chitra Banerjee Divakaruni - <span class="badge rounded-pill bg-primary">3.75</span> across <span class="badge rounded-pill bg-secondary">16,135</span> ratings</li>
-                        <li class="list-group-item"><a class="card-link" href="%">Kitchen Confidential: Adventures in the Culinary Underbelly</a> by Anthony Bourdain - <span class="badge rounded-pill bg-primary">4.21</span> across <span class="badge rounded-pill bg-secondary">418,083</span> ratings</li>
+                        <li class="list-group-item"><a class="card-link text-underline-hover" href="#">A Journey Through African American ..</a> by Michael W. Twitty - <span class="badge rounded-pill bg-primary">4.45</span> • <span class="badge rounded-pill bg-secondary">10,598</span> ratings</li>
+                        <li class="list-group-item"><a class="card-link text-underline-hover" href="#">Crying in H Mart</a> by Michelle Zauner | <span class="badge rounded-pill bg-primary">4.39</span> • <span class="badge rounded-pill bg-secondary">318,432</span> ratings</li>
+                        <li class="list-group-item"><a class="card-link text-underline-hover" href="#">Apricots on the Nile: A Memoir wi ..</a> by Colette Rossant | <span class="badge rounded-pill bg-primary">3.80</span> • <span class="badge rounded-pill bg-secondary">689</span> ratings</li>
+                        <li class="list-group-item"><a class="card-link text-underline-hover" href="#">The Language of Baklava</a> by Diana Abu-Jaber | <span class="badge rounded-pill bg-primary">4.08</span> • <span class="badge rounded-pill bg-secondary">3,907</span> ratings</li>
+                        <li class="list-group-item"><a class="card-link text-underline-hover" href="#">Taste: My Life Through Food</a> by Stanley Tucci | <span class="badge rounded-pill bg-primary">4.15</span> • <span class="badge rounded-pill bg-secondary">39,754</span> ratings</li>
+                        <li class="list-group-item"><a class="card-link text-underline-hover" href="#">Burnt Toast Makes You Sing Good</a> by Kathleen Flinn | <span class="badge rounded-pill bg-primary">3.83</span> • <span class="badge rounded-pill bg-secondary">2,540</span> ratings</li>
+                        <li class="list-group-item"><a class="card-link text-underline-hover" href="#">With the Fire on High</a> by Elizabeth Acevedo | <span class="badge rounded-pill bg-primary">4.29</span> • <span class="badge rounded-pill bg-secondary">95,740</span> ratings</li>
+                        <li class="list-group-item"><a class="card-link text-underline-hover" href="#">Yes, Chef</a> by Marcus Samuelsson | <span class="badge rounded-pill bg-primary">4.09</span> • <span class="badge rounded-pill bg-secondary">22,948</span> ratings</li>
+                        <li class="list-group-item"><a class="card-link text-underline-hover" href="#">The Mistress of Spices</a> by Chitra Banerjee Divakaruni | <span class="badge rounded-pill bg-primary">3.75</span> • <span class="badge rounded-pill bg-secondary">16,135</span> ratings</li>
+                        <li class="list-group-item"><a class="card-link text-underline-hover" href="#">Kitchen Confidential: Adventures in ..</a> by Anthony Bourdain | <span class="badge rounded-pill bg-primary">4.21</span> • <span class="badge rounded-pill bg-secondary">418,083</span> ratings</li>
                     </ul>
-                <!-- <div id="accordion">
-                    <div class="card">
-                    <div class="card-header" id="headingOne">
-                        <h5 class="mb-0">
-                        <button class="btn btn-link collapsed text-underline-hover" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Comparisons with other books in this genre
-                        </button>
-                        </h5>
-                    </div>
-                
-                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                        <div class="card-body">
-                            {% for review_genre in book.review_genre.all %}<p>{{ review_genre.review_genre }}</p>{% endfor %}
-                        </div>
-                    </div>
-                    </div>
-                    <div class="card">
-                    <div class="card-header" id="headingTwo">
-                        <h5 class="mb-0">
-                        <button class="btn btn-link collapsed text-underline-hover" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Comparisons with other books by the author
-                        </button>
-                        </h5>
-                    </div>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                        <div class="card-body">
-                            {% for review_author in book.review_author.all %}<p>{{ review_author.review_author }}</p>{% endfor %}
-                        </div>
-                    </div>
-                    </div>
-                </div> -->
             </div>
-            <div class="col-6 col-md-4"></div>
         </div>
     </div>
 </main>
