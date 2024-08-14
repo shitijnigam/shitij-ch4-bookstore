@@ -27,6 +27,18 @@ class ReviewSummaryOverallAdmin(admin.StackedInline):
     max_num = 1
 
 
+class ReviewSummaryGoodreadsAdmin(admin.StackedInline):
+    model = ReviewSummaryGoodreads
+    extra = 1
+    max_num = 1
+
+
+class ReviewSummaryAmazonAdmin(admin.StackedInline):
+    model = ReviewSummaryAmazon
+    extra = 1
+    max_num = 1
+
+
 class ReviewSummaryGenre(admin.StackedInline):
     model = ReviewSummaryGenre
     extra = 1
@@ -44,8 +56,11 @@ class BookAdmin(admin.ModelAdmin):
         GenreInlineAdmin,
         ReviewStarAdmin,
         ReviewSummaryOverallAdmin,
+        ReviewSummaryGoodreadsAdmin,
+        ReviewSummaryAmazonAdmin,
         ReviewSummaryGenre,
         ReviewSummaryAuthor,
+        ReviewInline,
     ]
     list_display = (
         "title",

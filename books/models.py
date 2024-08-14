@@ -41,6 +41,9 @@ class ReviewStar(models.Model):
         related_name="review_star",
     )
     review_star = models.DecimalField(max_digits=6, decimal_places=2)
+    review_total_Ratings = models.DecimalField(
+        max_digits=20, decimal_places=0, default=0
+    )
 
     def __float__(self):
         return self.review_star
@@ -57,6 +60,8 @@ class Review(models.Model):
         get_user_model(),
         on_delete=models.CASCADE,
     )
+    review_url = models.CharField(max_length=500, default="https://www.google.com/")
+    reviewer_name = models.CharField(max_length=200, default="SampleReviewer")
 
     def __str__(self):
         return self.review
@@ -84,6 +89,30 @@ class ReviewSummaryOverall(models.Model):
 
     def __str__(self):
         return self.review_summary
+
+
+class ReviewSummaryGoodreads(models.Model):
+    book = models.ForeignKey(
+        Book,
+        on_delete=models.CASCADE,
+        related_name="review_goodreads",
+    )
+    review_goodreads = models.TextField()
+
+    def __str__(self):
+        return self.review_goodreads
+
+
+class ReviewSummaryAmazon(models.Model):
+    book = models.ForeignKey(
+        Book,
+        on_delete=models.CASCADE,
+        related_name="review_amazon",
+    )
+    review_amazon = models.TextField()
+
+    def __str__(self):
+        return self.review_amazon
 
 
 class ReviewSummaryGenre(models.Model):
