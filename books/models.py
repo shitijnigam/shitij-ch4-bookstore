@@ -18,7 +18,6 @@ class Book(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)
     cover = models.ImageField(upload_to="covers/", blank=True)
     description = models.TextField(default="<Empty>")
-    # short_title = models.CharField(max_length=200, default="")
 
     class Meta:
         indexes = [
@@ -87,6 +86,8 @@ class ReviewSummaryOverall(models.Model):
         related_name="review_summary",
     )
     review_summary = models.TextField()
+    review_good = models.TextField(default="")
+    review_bad = models.TextField(default="")
 
     def __str__(self):
         return self.review_summary
@@ -99,6 +100,12 @@ class ReviewSummaryGoodreads(models.Model):
         related_name="review_goodreads",
     )
     review_goodreads = models.TextField()
+    review_goodreads_star = models.DecimalField(
+        max_digits=6, decimal_places=2, default=2.5
+    )
+    review_goodreads_ratings = models.DecimalField(
+        max_digits=20, decimal_places=0, default=0
+    )
 
     def __str__(self):
         return self.review_goodreads
@@ -111,6 +118,12 @@ class ReviewSummaryAmazon(models.Model):
         related_name="review_amazon",
     )
     review_amazon = models.TextField()
+    review_amazon_star = models.DecimalField(
+        max_digits=6, decimal_places=2, default=2.5
+    )
+    review_amazon_ratings = models.DecimalField(
+        max_digits=20, decimal_places=0, default=0
+    )
 
     def __str__(self):
         return self.review_amazon

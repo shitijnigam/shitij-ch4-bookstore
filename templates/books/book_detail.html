@@ -9,40 +9,46 @@
         <div class="row">
             <div class="col-6 col-md-4">
                 {% if book.cover %}
-                    <img class="ml-3 img-thumbnail rounded mx-auto d-block" src="{{ book.cover.url }}" alt = "{{ book.title }}"> <!-- original class: bookcover -->
+                    <img class="ml-3 img-thumbnail rounded mx-auto d-block" style="width: 100%;" src="{{ book.cover.url }}" alt = "{{ book.title }}">
                 {% endif %}
+                <div class="row align-items-start py-md-3">
+                    {% for review_goodreads in book.review_goodreads.all %}
+                    <div class="col-md">
+                        <div class="card text-center">
+                            <div class="card-header"><small class="text-body-secondary">Goodreads</small></div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ review_goodreads.review_goodreads_star }}</h5>
+                                <p class="card-text"><small class="text-body-secondary">{{ review_goodreads.review_goodreads_ratings }} ratings</small></p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% for review_amazon in book.review_amazon.all %}
+                    <div class="col-md">
+                        <div class="card text-center">
+                            <div class="card-header"><small class="text-body-secondary">Amazon</small></div>
+                            <div class="card-body">    
+                                <h5 class="card-title">{{ review_amazon.review_amazon_star }}</h5>
+                                <p class="card-text"><small class="text-body-secondary">{{ review_amazon.review_amazon_ratings }} ratings</small></p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
             <div class="col-12 col-md-8">
                 <div class="media-body">
                     <h1 id="title" class="bd-title">{{ book.title }}</h1>
                     <p class="text-muted">by {{ book.author }}</p>
-                    <div>
-                        <!-- <h6 id="synopsis_summary">Synopsis</h6> -->
-                        <p>{{ book.description }}</p>
-                        <p>{% for genre in book.genres.all %}<span class="badge rounded-pill bg-dark">{{ genre.genre }}</span>{% endfor %}</p>
-                        <h6 class="py-md-3" id="critic_summary">Critics Reviews</h6>
-                        <!-- {% for review_summary in book.review_summary.all %}<p>{{ review_summary.review_summary }}</p>{% endfor %} -->
-                        <ul class="list-group list-group-flush">
-                            <!-- {% for review in book.reviews.all %}
-                            <li class="list-group-item"><em><a class="card-link" href="{{ review.review_url }}"> {{ review.reviewer_name }}</a>: "{{ review.review }}"</em></li>
-                            {% endfor %} -->
-                            <li class="list-group-item"><strong>Praise: </strong> Critics praise "Slow Noodles" for its intimate and honest portrayal of Cambodian life, particularly the author's ability to blend personal narrative with the historical context of the Khmer Rouge. The book is lauded for its vivid sensory details, especially in descriptions of food and culture, creating a rich and immersive reading experience. Many critics appreciate the author's resilience and strength, shining through the heartbreaking narrative.</li>
-                            <li class="list-group-item"><strong>Criticisms: </strong> Limited critical coverage.</li>
-                        </ul>
-                        <h6 class="py-md-3" id="goodreads_summary">Goodreads Reviews • <span class="badge rounded-pill bg-primary">{% for review_star in book.review_star.all %}{{ review_star.review_star }}{% endfor %}</span> • <span class="badge rounded-pill bg-secondary">900</span> ratings</h6>
-                        <!-- {% for review_goodreads in book.review_goodreads.all %}<p>{{ review_goodreads.review_goodreads }} (<a href="https://www.goodreads.com/book/show/3/reviews" class="text-underline-hover">Read all</a>)</p>{% endfor %} -->
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><strong>Praise: </strong> Goodreads readers praise "Slow Noodles" for its poignant exploration of Cambodian culture and the author's resilience. Many appreciate the vivid descriptions of food and family, creating a strong sense of place. The memoir is often described as heartwarming, heartbreaking, and ultimately hopeful. Readers admire Nguon's ability to share her personal journey with such honesty and vulnerability.</li>
-                            <li class="list-group-item"><strong>Criticisms: </strong> Readers sometimes mention pacing issues in "Slow Noodles," feeling certain parts drag while others rush. Some wish for deeper exploration of the Khmer Rouge era and its lasting impact. A few find the constant focus on food repetitive, desiring more balance with personal narrative. Additionally, a small number of readers express difficulty connecting emotionally with the author due to a perceived distance in storytelling.</li>
-                        </ul>
-                        <h6 class="py-md-3" id="amazon_summary">Amazon Reviews • <span class="badge rounded-pill bg-primary">4.9</span> • <span class="badge rounded-pill bg-secondary">33</span> ratings</h6>
-                        <!-- {% for review_amazon in book.review_amazon.all %}<p>{{ review_amazon.review_amazon }} (<a href="https://www.goodreads.com/book/show/3/reviews" class="text-underline-hover">Read all</a>)</p>{% endfor %} -->
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><strong>Praise: </strong> Amazon reviewers praise Slow Noodles for its heartfelt storytelling, blending rich cultural history with personal memoir. Readers appreciate the authentic portrayal of Cambodian traditions, the evocative writing, and the way food and family are intricately woven into the narrative.</li>
-                            <li class="list-group-item"><strong>Criticisms: </strong> Some Amazon reviewers of Slow Noodles offered critiques, noting that the memoir's emotional depth and detailed recounting of the Cambodian genocide might be overwhelming for some readers. Additionally, a few felt that the narrative's focus on food could sometimes overshadow the historical and personal elements of the story.</li>
-                        </ul>
-                        
-                    </div>
+                    <p>{{ book.description }}</p>
+                    <p>{% for genre in book.genres.all %}<span class="badge rounded-pill bg-dark">{{ genre.genre }}</span>{% endfor %}</p>
+                    <h6 class="py-md-3" id="critic_summary">Summary of Reviews</h6>
+                    <ul class="list-group list-group-flush">
+                        {% for review_summary in book.review_summary.all %}
+                        <li class="list-group-item"><strong>Praise:</strong> {{ review_summary.review_good }}</li>
+                        <li class="list-group-item"><strong>Criticisms:</strong> {{ review_summary.review_bad }}</li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
         </div>

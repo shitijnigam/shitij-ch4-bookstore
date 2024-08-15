@@ -22,19 +22,19 @@ class ReviewStarAdmin(admin.StackedInline):
 
 
 class ReviewSummaryOverallAdmin(admin.StackedInline):
-    model = ReviewSummaryOverall
+    model = ReviewSummaryOverall  # contains good, bad
     extra = 1
     max_num = 1
 
 
 class ReviewSummaryGoodreadsAdmin(admin.StackedInline):
-    model = ReviewSummaryGoodreads
+    model = ReviewSummaryGoodreads  # contains goodreads summary and rating
     extra = 1
     max_num = 1
 
 
 class ReviewSummaryAmazonAdmin(admin.StackedInline):
-    model = ReviewSummaryAmazon
+    model = ReviewSummaryAmazon  # contains amazon summary and rating
     extra = 1
     max_num = 1
 
@@ -54,18 +54,18 @@ class ReviewSummaryAuthor(admin.StackedInline):
 class BookAdmin(admin.ModelAdmin):
     inlines = [
         GenreInlineAdmin,
-        ReviewStarAdmin,
+        # ReviewStarAdmin,
         ReviewSummaryOverallAdmin,
         ReviewSummaryGoodreadsAdmin,
         ReviewSummaryAmazonAdmin,
-        ReviewSummaryGenre,
-        ReviewSummaryAuthor,
+        # ReviewSummaryGenre,
+        # ReviewSummaryAuthor,
         ReviewInline,
     ]
     list_display = (
         "title",
         "author",
-        "price",
+        # "price",
         "description",
     )
 
